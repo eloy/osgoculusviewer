@@ -19,12 +19,18 @@ class WarpCameraPreDrawCallback;
 class OculusSwapCallback;
 class EyeRotationCallback;
 
+enum Eye
+  {
+    LEFT = 0,
+    RIGHT = 1,
+    COUNT = 2
+  };
 
 class OculusDevice : public osg::Referenced {
 	friend class WarpCameraPreDrawCallback;
 	friend class OculusSwapCallback;
 	friend class EyeRotationCallback;
-	
+
 	public:
 		enum Eye
 		{
@@ -56,10 +62,10 @@ class OculusDevice : public osg::Referenced {
 
 		void resetSensorOrientation() const;
 		void updatePose(unsigned int frameIndex = 0);
-		
+
 		osg::Vec3 position() const { return m_position; }
 		osg::Quat orientation() const { return m_orientation;  }
-		
+
 		osg::Geode* distortionMesh(Eye eye, osg::Program* program, int x, int y, int w, int h, bool splitViewport=false);
 		osg::Camera* createRTTCamera(osg::Texture* texture, OculusDevice::Eye eye, osg::Transform::ReferenceFrame referenceFrame, osg::GraphicsContext* gc = 0) const;
 		osg::Camera* createWarpOrthoCamera(double left, double right, double bottom, double top, osg::GraphicsContext* gc=0) const;
@@ -95,7 +101,7 @@ class OculusDevice : public osg::Referenced {
 
 		void trySetProcessAsHighPriority() const;
 		void applyExtendedModeSettings() const;
-		
+
 		static const std::string m_warpVertexShaderSource;
 		static const std::string m_warpWithTimewarpVertexShaderSource;
 		static const std::string m_warpFragmentShaderSource;
@@ -114,7 +120,7 @@ class OculusDevice : public osg::Referenced {
 		osg::Vec3f m_leftEyeAdjust;
 		osg::Vec3f m_rightEyeAdjust;
 
-		const float m_worldUnitsPerMetre; 
+		const float m_worldUnitsPerMetre;
 		osg::Vec3 m_position;
 		osg::Quat m_orientation;
 

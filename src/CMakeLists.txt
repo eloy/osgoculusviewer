@@ -54,6 +54,9 @@ TARGET_LINK_LIBRARIES(${TARGET_LIBRARYNAME} ${OCULUS_SDK_LIBRARIES}	)
 # Link to open gl libs
 TARGET_LINK_LIBRARIES(${TARGET_LIBRARYNAME} ${OPENGL_LIBRARIES} )
 
+# Link to open gl libs (needed to build examples)
+TARGET_LINK_LIBRARIES(${TARGET_LIBRARYNAME} -ldl )
+
 # Link to libraries needed for Oculus on Visual Studio
 IF(MSVC)
 	TARGET_LINK_LIBRARIES(${TARGET_LIBRARYNAME} winmm.lib ws2_32.lib)

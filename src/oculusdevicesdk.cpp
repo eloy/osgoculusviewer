@@ -4,6 +4,7 @@
 *  Created on: Oct 01, 2014
 *      Author: Bjorn Blissing
 */
+
 #include "oculusdevicesdk.h"
 #include <osg/Notify>
 #include <OVR_CAPI_GL.h>
@@ -471,8 +472,8 @@ void OculusDeviceSDK::configureRendering(Display* disp, int backBufferMultisampl
 
 void OculusDeviceSDK::setupSlaveCameras(osg::GraphicsContext* context, osgViewer::View* view) {
 	m_view = view;
-	m_cameraRTTLeft = createRTTCamera(m_leftTexture, m_leftDepthTexture, renderOrder(Eye::LEFT), context);
-	m_cameraRTTRight = createRTTCamera(m_rightTexture, m_rightDepthTexture, renderOrder(Eye::RIGHT), context);
+	m_cameraRTTLeft = createRTTCamera(m_leftTexture, m_leftDepthTexture, renderOrder(LEFT), context);
+	m_cameraRTTRight = createRTTCamera(m_rightTexture, m_rightDepthTexture, renderOrder(RIGHT), context);
 
 	// Add RTT cameras as slaves, specifying offsets for the projection
 	m_view->addSlave(m_cameraRTTLeft.get(),
@@ -497,7 +498,7 @@ osg::Camera* OculusDeviceSDK::createRTTCamera(osg::Texture* texture, osg::Textur
 	camera->setAllowEventFocus(false);
 	camera->setReferenceFrame(osg::Camera::RELATIVE_RF);
 	camera->setGraphicsContext(gc);
-	
+
 	if (texture) {
 		texture->setFilter(osg::Texture2D::MIN_FILTER, osg::Texture2D::LINEAR);
 		texture->setFilter(osg::Texture2D::MAG_FILTER, osg::Texture2D::LINEAR);
@@ -596,7 +597,7 @@ void OculusRealizeOperation::operator() (osg::GraphicsContext* gc) {
 		HDC dc = wdc->getHDC();
 		m_oculusDevice->initializeTextures(wdc.get());
 		m_oculusDevice->configureRendering(window, dc, 1);
-	
+
 #elif __linux__
 		osg::ref_ptr<osgViewer::GraphicsWindowX11> ldc = dynamic_cast<osgViewer::GraphicsWindowX11*>(gc);
 		if (!ldc.valid()) {
